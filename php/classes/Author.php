@@ -43,4 +43,29 @@ class author {
 	 * @var $authorUsername
 	 */
 	private $authorUsername;
+	/**
+	 * accessor method for author id
+	 *
+	 * @return Uuid value of author id (or null if new author)
+	 **/
+	public function getauthorId(): Uuid {
+		return ($this->authorId);
+	}
+	/**
+	 * mutator method for authorId
+	 *
+	 * @param Uuid| string $newAuthorId value for new authorId
+	 * @throws \rangeException if $newAuthorId is not positive
+	 * @throws \typeError if the authorId is not
+	 */
+	public function setAuthorId($newAuthorId): void {
+		try{
+			$uuid = self::validateUuid($newAuthorId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception))
+		}
+	}
 }
+
+
