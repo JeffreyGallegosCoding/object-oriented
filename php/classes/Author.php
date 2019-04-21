@@ -72,9 +72,7 @@ class author {
 	 * accessor method for author activation token
 	 * @return string value of the activation token
 	 */
-	/**
-	 * @return mixed
-	 */
+
 	public function getAuthorActivationToken() : ?string {
 		return ($this->authorActivationToken);
 	}
@@ -102,6 +100,41 @@ class author {
 			throw (new\RangeException("author activation token has to be 32"));
 		}
 		$this->authorActivationToken = $newAuthorActivationToken;
+	}
+
+
+
+
+	/**
+	 * accessor method for author avatar Url
+	 * @return string value of the avatar Url
+	 */
+	/**
+	 * @return mixed
+	 */
+	public function getAuthorAvatarUrl(): string {
+		return ($this->authorAvatarUrl);
+	}
+	/**mutator method for author avatar Url
+	 *
+	 * @param string $newAuthorAvatarUrl new value of at avatar
+	 * @throws \InvalidArgumentException if $newAvatarUrl is not a string or insecure
+	 * @throws \RangeException if $newAvatarUrl is > 255 characters
+	 * @throws \TypeError if newAvatarUrl is not a string
+	 **/
+	/**
+	 * @param mixed $authorAvatarUrl
+	 */
+	public function setAuthorAvatarUrl(string $newAuthorAvatarUrl) : void {
+		$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
+		$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newAuthorAvatarUrl) === true) {
+			throw (new \InvalidArgumentException("author avatar Url is empty or insecure"));
+		}
+		if(strlen($newAuthorAvatarUrl) > 255) {
+			throw(new \RangeException("author avatar url is too large"));
+		}
+		$this->authorAvatarUrl = $newAuthorAvatarUrl;
 	}
 }
 
