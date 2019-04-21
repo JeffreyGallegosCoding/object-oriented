@@ -170,6 +170,44 @@ class author {
 		}
 		$this->authorEmail = $newAuthorEmail;
 	}
+
+
+	/**
+	 * accessor method for author hash
+	 * @return string value of the hash
+	 */
+	/**
+	 * @return mixed
+	 */
+	public function getAuthorHash(): string {
+		return ($this->authorHash);
+	}
+	/**mutator method for author hash
+	 *
+	 * @param string $newAuthorHash new value of Hash
+	 * @throws \InvalidArgumentException if $newHash is not a string or insecure
+	 * @throws \RangeException if $newHash is > 97 characters
+	 * @throws \TypeError if newHash is not a string
+	 **/
+	/**
+	 * @param mixed $authorHash
+	 */
+	public function setAuthorHash(string $newAuthorHash) : void {
+		$newAuthorHash = trim($newAuthorHash);
+		if(empty($newAuthorHash) === true) {
+			throw (new \InvalidArgumentException("author hash is empty or insecure"));
+		}
+		$authorHashInfo = password_get_info($newAuthorHash);
+		if($authorHashInfo["algoName"] !== "argon2i") {
+			throw(new \ InvalidArgumentException("author hash is not a valid hash"));
+		}
+		if(strlen($newAuthorHash) > 97) {
+			throw(new \RangeException("author hash is too large"));
+		}
+		$this->authorHash = $newAuthorHash;
+	}
 }
+
+
 
 
