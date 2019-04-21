@@ -26,7 +26,7 @@ class author {
 	private $authorAvatarUrl;
 	/**
 	 * token handed out to verify that the author is valid and not malicious.
-	 *v@var $authorActivationToken
+	 *@var $authorActivationToken
 	 **/
 	private $authorActivationToken;
 	/**
@@ -102,9 +102,6 @@ class author {
 		$this->authorActivationToken = $newAuthorActivationToken;
 	}
 
-
-
-
 	/**
 	 * accessor method for author avatar Url
 	 * @return string value of the avatar Url
@@ -137,8 +134,6 @@ class author {
 		$this->authorAvatarUrl = $newAuthorAvatarUrl;
 	}
 
-
-
 	/**
 	 * accessor method for author email
 	 * @return string value of the email
@@ -170,7 +165,6 @@ class author {
 		}
 		$this->authorEmail = $newAuthorEmail;
 	}
-
 
 	/**
 	 * accessor method for author hash
@@ -205,6 +199,38 @@ class author {
 			throw(new \RangeException("author hash is too large"));
 		}
 		$this->authorHash = $newAuthorHash;
+	}
+
+	/**
+	 * accessor method for author username
+	 * @return string value of the username
+	 */
+	/**
+	 * @return mixed
+	 */
+	public function getAuthorUsername(): string {
+		return ($this->authorUsername);
+	}
+	/**mutator method for author username
+	 *
+	 * @param string $newAuthorUsername new value of Username
+	 * @throws \InvalidArgumentException if $newUsername is not a string or insecure
+	 * @throws \RangeException if $newUsername is > 32 characters
+	 * @throws \TypeError if newUsername is not a string
+	 **/
+	/**
+	 * @param mixed $authorUsername
+	 */
+	public function setAuthorUsername(string $newAuthorUsername) : void {
+		$newAuthorUsername = trim($newAuthorUsername);
+		$newAuthorUsername = filter_var($newAuthorUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newAuthorUsername) === true) {
+			throw (new \InvalidArgumentException("author username is empty or insecure"));
+		}
+		if(strlen($newAuthorUsername) > 32) {
+			throw(new \RangeException("author username is too large"));
+		}
+		$this->authorUsername = $newAuthorUsername;
 	}
 }
 
