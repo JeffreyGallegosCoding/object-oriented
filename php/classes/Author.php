@@ -6,9 +6,10 @@ require_once (dirname(__DIR__, 2) . "/composer.json/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 /**
- * Cross Section of a author Profile
+ * An online author profile
+ * This author profile describes what traits go into an online author profile. Traits that pertain to the individual's
+ * user information and privacy.
  * @author Jeffrey Gallegos <jgallegos362@cnm.edu>
- * @version 1.0.0
  **/
 
 class author {
@@ -45,7 +46,6 @@ class author {
 	private $authorUsername;
 	/**
 	 * accessor method for author id
-	 *
 	 * @return Uuid value of author id (or null if new author)
 	 **/
 	public function getauthorId(): Uuid {
@@ -63,8 +63,45 @@ class author {
 			$uuid = self::validateUuid($newAuthorId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
 			$exceptionType = get_class($exception);
-			throw (new $exceptionType($exception))
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
+		//convert and store the authorId
+		$this->authorId = Uuid;
+	}
+	/**
+	 * accessor method for author activation token
+	 * @return string value of the activation token
+	 */
+	/**
+	 * @return mixed
+	 */
+	public function getAuthorActivationToken() : ?string {
+		return ($this->authorActivationToken);
+	}
+	/**
+	 * mutator method for author activation token
+	 *
+	 * @param string $newAuthorActivationToken
+	 * @throws \InvalidArgumentException  if the token is not a string or insecure
+	 * @throws \RangeException if the token is not exactly 32 characters
+	 * @throws \TypeError if the activation token is not a string
+	 */
+	/**
+	 * @param mixed $authorActivationToken
+	 */
+	public function setAuthorActivationToken(?string $newAuthorActivationToken): void {
+		if ($newAuthorActivationToken === null) {
+			$this->authorActivationToken = null;
+			return;
+		}
+		$newAuthorActivationToken = strtolower(trim($newAuthorActivationToken));
+		if(ctype_xdigit($newAuthorActivationToken) === false) {
+			throw (new\RangeException("author activation is not valid"));
+		}
+		if(strlen($newAuthorActivationToken) !== 32) {
+			throw (new\RangeException("author activation token has to be 32"));
+		}
+		$this->authorActivationToken = $newAuthorActivationToken;
 	}
 }
 
