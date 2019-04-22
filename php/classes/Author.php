@@ -73,7 +73,7 @@ class author {
 	 * @return string value of the activation token
 	 */
 
-	public function getAuthorActivationToken() : ?string {
+	public function getAuthorActivationToken() : string {
 		return ($this->authorActivationToken);
 	}
 	/**
@@ -87,7 +87,7 @@ class author {
 	/**
 	 * @param mixed $authorActivationToken
 	 */
-	public function setAuthorActivationToken(?string $newAuthorActivationToken): void {
+	public function setAuthorActivationToken(string $newAuthorActivationToken): void {
 		if ($newAuthorActivationToken === null) {
 			$this->authorActivationToken = null;
 			return;
