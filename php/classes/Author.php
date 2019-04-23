@@ -4,6 +4,8 @@ namespace edu\jgallegos362\objectOriented;
 
 require_once (dirname(__DIR__, 2) . "/composer.json/autoload.php");
 
+use http\Encoding\Stream\Inflate;
+use http\Exception\InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 /**
  * An online author profile
@@ -48,9 +50,42 @@ class author {
 	 * accessor method for author id
 	 * @return Uuid value of author id (or null if new author)
 	 **/
-	public function getauthorId(): Uuid {
-		return ($this->authorId);
+
+	/**
+	 * Constructor for Author
+	 *
+	 * @param Uuid| string $newAuthorId value for new authorId
+	 * @param string $newAuthorActivationToken
+	 * @param string $newAuthorAvatarUrl new value of at avatar
+	 * @param string $newAuthorEmail new value of Email
+	 * @param string $newAuthorHash new value of Hash
+	 * @param string $newAuthorUsername new value of Username
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are too large
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception
+	 */
+
+	public function construct (string $newAuthorId, string $newAuthorActivationToken, string $newAuthorAvatarUrl,
+	string $newAuthorEmail, string $newAuthorHash, string $newAuthorUsername) {
+		try {
+			$this->setAuthorId($newAuthorId);
+			$this->setAuthorActivationToken($newAuthorActivationToken);
+			$this->authorAvatarUrl($newAuthorAvatarUrl);
+			$this->authorEmail($newAuthorEmail);
+			$this->authorHash($newAuthorHash);
+			$this->authorUsername($newAuthorHash);
+		} //Determine the Exception that was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \ TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
+
+
+	public function getAuthorId(): Uuid {
+	return ($this->authorId);
+}
 	/**
 	 * mutator method for authorId
 	 *
@@ -84,9 +119,7 @@ class author {
 	 * @throws \RangeException if the token is not exactly 32 characters
 	 * @throws \TypeError if the activation token is not a string
 	 */
-	/**
-	 * @param mixed $authorActivationToken
-	 */
+
 	public function setAuthorActivationToken(string $newAuthorActivationToken): void {
 		if ($newAuthorActivationToken === null) {
 			$this->authorActivationToken = null;
@@ -106,9 +139,7 @@ class author {
 	 * accessor method for author avatar Url
 	 * @return string value of the avatar Url
 	 */
-	/**
-	 * @return mixed
-	 */
+
 	public function getAuthorAvatarUrl(): string {
 		return ($this->authorAvatarUrl);
 	}
@@ -119,9 +150,7 @@ class author {
 	 * @throws \RangeException if $newAvatarUrl is > 255 characters
 	 * @throws \TypeError if newAvatarUrl is not a string
 	 **/
-	/**
-	 * @param mixed $authorAvatarUrl
-	 */
+
 	public function setAuthorAvatarUrl(string $newAuthorAvatarUrl) : void {
 		$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
 		$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -138,9 +167,7 @@ class author {
 	 * accessor method for author email
 	 * @return string value of the email
 	 */
-	/**
-	 * @return mixed
-	 */
+
 	public function getAuthorEmail(): string {
 		return ($this->authorEmail);
 	}
@@ -151,9 +178,7 @@ class author {
 	 * @throws \RangeException if $newEmail is > 128 characters
 	 * @throws \TypeError if newEmail is not a string
 	 **/
-	/**
-	 * @param mixed $authorEmail
-	 */
+
 	public function setAuthorEmail(string $newAuthorEmail) : void {
 		$newAuthorEmail = trim($newAuthorEmail);
 		$newAuthorEmail = filter_var($newAuthorEmail, FILTER_VALIDATE_EMAIL);
@@ -170,9 +195,6 @@ class author {
 	 * accessor method for author hash
 	 * @return string value of the hash
 	 */
-	/**
-	 * @return mixed
-	 */
 	public function getAuthorHash(): string {
 		return ($this->authorHash);
 	}
@@ -182,9 +204,6 @@ class author {
 	 * @throws \InvalidArgumentException if $newHash is not a string or insecure
 	 * @throws \RangeException if $newHash is > 97 characters
 	 * @throws \TypeError if newHash is not a string
-	 **/
-	/**
-	 * @param mixed $authorHash
 	 */
 	public function setAuthorHash(string $newAuthorHash) : void {
 		$newAuthorHash = trim($newAuthorHash);
@@ -205,9 +224,6 @@ class author {
 	 * accessor method for author username
 	 * @return string value of the username
 	 */
-	/**
-	 * @return mixed
-	 */
 	public function getAuthorUsername(): string {
 		return ($this->authorUsername);
 	}
@@ -217,10 +233,7 @@ class author {
 	 * @throws \InvalidArgumentException if $newUsername is not a string or insecure
 	 * @throws \RangeException if $newUsername is > 32 characters
 	 * @throws \TypeError if newUsername is not a string
-	 **/
-	/**
-	 * @param mixed $authorUsername
-	 */
+	*/
 	public function setAuthorUsername(string $newAuthorUsername) : void {
 		$newAuthorUsername = trim($newAuthorUsername);
 		$newAuthorUsername = filter_var($newAuthorUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
