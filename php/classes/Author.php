@@ -2,10 +2,8 @@
 
 namespace edu\jgallegos362\objectOriented;
 
-require_once (dirname(__DIR__, 2) . "/composer.json/autoload.php");
+require_once (dirname(__DIR__, 2) .  "classes/autoload.php");
 
-use http\Encoding\Stream\Inflate;
-use http\Exception\InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 /**
  * An online author profile
@@ -74,7 +72,7 @@ class author {
 			$this->setauthorAvatarUrl($newAuthorAvatarUrl);
 			$this->setauthorEmail($newAuthorEmail);
 			$this->setauthorHash($newAuthorHash);
-			$this->setauthorUsername($newAuthorHash);
+			$this->setauthorUsername($newAuthorUsername);
 		} //Determine the Exception that was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \ TypeError $exception) {
 			$exceptionType = get_class($exception);
@@ -95,7 +93,7 @@ class author {
 	 */
 	public function setAuthorId($newAuthorId): void {
 		try{
-			$uuid = self::validateUuid($newAuthorId);
+			$Uuid = self::validateUuid($newAuthorId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
