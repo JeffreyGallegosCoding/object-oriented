@@ -71,10 +71,10 @@ class author {
 		try {
 			$this->setAuthorId($newAuthorId);
 			$this->setAuthorActivationToken($newAuthorActivationToken);
-			$this->authorAvatarUrl($newAuthorAvatarUrl);
-			$this->authorEmail($newAuthorEmail);
-			$this->authorHash($newAuthorHash);
-			$this->authorUsername($newAuthorHash);
+			$this->setauthorAvatarUrl($newAuthorAvatarUrl);
+			$this->setauthorEmail($newAuthorEmail);
+			$this->setauthorHash($newAuthorHash);
+			$this->setauthorUsername($newAuthorHash);
 		} //Determine the Exception that was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \ TypeError $exception) {
 			$exceptionType = get_class($exception);
