@@ -1,8 +1,8 @@
 <?php
 
-namespace edu\jgallegos362\objectOriented;
+namespace jgallegos362\objectOriented;
 
-require_once (dirname(__DIR__, 2) .  "classes/autoload.php");
+require_once (dirname(__DIR__, 2) .  "/classes/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 /**
@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
  * @author Jeffrey Gallegos <jgallegos362@cnm.edu>
  **/
 
-class author {
+class Author {
 	use ValidateUuid;
 	/**
 	 * id for this author; this is the primary key
@@ -99,7 +99,7 @@ class author {
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		//convert and store the authorId
-		$this->authorId = Uuid;
+		$this->authorId = $Uuid;
 	}
 	/**
 	 * accessor method for author activation token

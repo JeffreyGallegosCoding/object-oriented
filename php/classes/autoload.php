@@ -16,7 +16,7 @@ spl_autoload_register(function ($class) {
 	 * prefix: the prefix for all the classes such as namespace
 	 * baseDir: the base directory for all classes as of now it is the current directory
 	 */
-	$prefix = "jgallegos362\\object-oriented";
+	$prefix = "jgallegos362\\objectOriented";
 	$baseDir = __DIR__;
 
 	//This asks if the class uses the namespace prefix.

@@ -1,5 +1,5 @@
 <?php
-namespace edu\jgallegos362\objectOriented;
+namespace jgallegos362\objectOriented;
 /**
  * Trait to Validate a mySQL Date
  *

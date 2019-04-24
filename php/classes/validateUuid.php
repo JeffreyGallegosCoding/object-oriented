@@ -1,5 +1,5 @@
 <?php
-namespace edu\jgallegos362\objectOriented;
+namespace jgallegos362\objectOriented;
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 use Ramsey\Uuid\Uuid;
 /**
