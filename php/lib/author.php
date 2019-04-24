@@ -8,7 +8,7 @@ require_once (dirname(__DIR__) . "/classes/autoload.php");
 
 use jgallegos362\objectOriented\Author;
 
-$authorId = new Author("b3d81ad8-0c17-4167-aa70-da7114c3c92a", "moreauthors.com", "16d9afe8a5db490e81a989f9306501cd", "author@author.com",
-	"$argon2i$v=19$m=1024,t=384,p=2$T1B6Ymdqa3FJdmZqaDdqYg$hhyC1jf2WjbgfD8Jp6GZE9Tg3IpsYpXKm2VWYOJq8LA", "newAuthor");
+$authorId = new Author("b3d81ad8-0c17-4167-aa70-da7114c3c92a", "16d9afe8a5db490e81a989f9306501cd", "moreauthors.com", "author@author.com",
+	'$argon2i$v=19$m=1024,t=384,p=2$T1B6Ymdqa3FJdmZqaDdqYg$hhyC1jf2WjbgfD8Jp6GZE9Tg3IpsYpXKm2VWYOJq8LA', "newAuthor");
 
 var_dump($authorId);

@@ -2,7 +2,7 @@
 
 namespace jgallegos362\objectOriented;
 
-require_once (dirname(__DIR__, 2) .  "/classes/autoload.php");
+require_once (dirname(__DIR__) .  "/classes/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 /**
@@ -13,7 +13,7 @@ use Ramsey\Uuid\Uuid;
  **/
 
 class Author {
-	use ValidateUuid;
+	use validateUuid;
 	/**
 	 * id for this author; this is the primary key
 	 * @var Uuid $authorId
@@ -64,7 +64,7 @@ class Author {
 	 * @throws \Exception
 	 */
 
-	public function construct (string $newAuthorId, string $newAuthorActivationToken, string $newAuthorAvatarUrl,
+	public function __construct (string $newAuthorId, string $newAuthorActivationToken, string $newAuthorAvatarUrl,
 	string $newAuthorEmail, string $newAuthorHash, string $newAuthorUsername) {
 		try {
 			$this->setAuthorId($newAuthorId);
