@@ -247,7 +247,7 @@ class Author {
 	 * @param \$pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
+
 	public function insert(\PDO $pdo) : void {
 		//create query template
 		$query = "insert into author(authorId, authorAvatarUr1, authorActivationToken, authorEmail, authorHash, authorUsername)
@@ -264,7 +264,7 @@ class Author {
 		 * @\PDO $pdo PDO connection object
 		 * @throws \PDOException when mySQL related errors occur
 		 * @throws \TypeError if $pdo is not a PDO connection object
-		 */
+
 		public function delete(\PDO $pdo) : void {
 			//query template
 			$query = "delete from author where authorId = 6ca4f376-d58f-4caf-8595-f5d45e9392e0";
@@ -279,7 +279,7 @@ class Author {
 		 * @param \PDO $pdo PDO connection object
 		 * @throws \PDOException when mySQL related errors occur
 		 * @throws \TypeError if $pdo is not a PDO connection object
-		 */
+
 		public function update(\PDO $pdo) : void {
 			//Query template
 			$query = "update author set authorUsername = BooksAreMyFavorite, authorAvatarUr1 = :BookLover where authorId = 6ca4f376-d58f-4caf-8595-f5d45e9392e0";
@@ -288,7 +288,7 @@ class Author {
 			$parameters = ["authorId" => $this->authorId->getBytes()];
 			$statement ->execute($parameters);
 		}
-
+		*/
 }
 
 
