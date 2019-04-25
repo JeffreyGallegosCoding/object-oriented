@@ -243,6 +243,52 @@ class Author {
 		}
 		$this->authorUsername = $newAuthorUsername;
 	}
+	/**Insert statement for Author class
+	 * @param \$pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function insert(\PDO $pdo) : void {
+		//create query template
+		$query = "insert into author(authorId, authorAvatarUr1, authorActivationToken, authorEmail, authorHash, authorUsername)
+ 						values (6ca4f376-d58f-4caf-8595-f5d45e9392e0, books.com,05eabe9f-f026-482f-8692-9d975b8f13ae, reader@reads.com,
+ 						 $argon2i$v=19$m=1024,t=384,p=2$T1B6Ymdqa3FJdmZqaDdqYg$hhyC1jf2WjbgfD8Jp6GZE9Tg3IpsYpXKm2VWYOJq8LA, Ilikebooks)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = ["authorId" => $this->authorId->getBytes()];
+		$statement->execute($parameters);
+	}
+		/**
+		 * Delete statement for author class
+		 * @\PDO $pdo PDO connection object
+		 * @throws \PDOException when mySQL related errors occur
+		 * @throws \TypeError if $pdo is not a PDO connection object
+		 */
+		public function delete(\PDO $pdo) : void {
+			//query template
+			$query = "delete from author where authorId = 6ca4f376-d58f-4caf-8595-f5d45e9392e0";
+			$statement = $pdo->prepare($query);
+
+			//bind the member variables to the place holders in the template
+			$parameters = ["authorId" => $this->authorId->getBytes()];
+			$statement->execute($parameters);
+		}
+		/**Update statement for Author class
+		 *
+		 * @param \PDO $pdo PDO connection object
+		 * @throws \PDOException when mySQL related errors occur
+		 * @throws \TypeError if $pdo is not a PDO connection object
+		 */
+		public function update(\PDO $pdo) : void {
+			//Query template
+			$query = "update author set authorUsername = BooksAreMyFavorite, authorAvatarUr1 = :BookLover where authorId = 6ca4f376-d58f-4caf-8595-f5d45e9392e0";
+			$statement = $pdo->prepare($query);
+
+			$parameters = ["authorId" => $this->authorId->getBytes()];
+			$statement ->execute($parameters);
+		}
+
 }
 
 
