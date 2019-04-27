@@ -288,7 +288,57 @@ class Author {
 			$parameters = ["authorId" => $this->authorId->getBytes()];
 			$statement ->execute($parameters);
 		}
-		*/
+	 *
+	 * returns a single object statement
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $tweetId tweet id to search for
+	 * @return Tweet|null Tweet found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 *
+	 *
+	 * public static function getAuthorByAuthorId (/PDO $pdo, $authorId) : ?Author {
+	 	// sanitize the authorId before searching
+	 	try {
+	 		$authorId = self :: validateUuid ($authorId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $excepection) {
+	 		throw(new \PDOException($excepection->getMessage(), 0, $excepection));
+		}
+		//query template
+		$query = "Select authorId, authorUsername from author where authorId = :authorId";
+	 	$statement = $pdo->prepare($query);
+	 	//bind the author id to the template place holder
+		$parameters = ["authorId" => $authorId->getBytes()];
+		$statement->execute($parameters);
+		//get the author from mySQL
+		try {
+			$author = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$author = new Author($row["authorId"], $row["authorAvatarUrl"], $row["authorActivationToken"], $row["authorEmail"],
+					$row["authorUsername"], $row["authorHash"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row could not be converted rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($author);
+	 }
+	 /**
+	  * formats the state variables for JSON serialization
+	  *
+	  * @return array resulting state variables to serialize
+	  *
+	public function jsonSerialize() : array {
+	$fields = get_object_vars($this);
+
+	$fields["authorId"] = $this->authorId->toString();
+	$fields["authorUsernameId"] = $this->tweetUsernameId->toString();
+
+}
+*/
 }
 
 
