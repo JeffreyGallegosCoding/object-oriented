@@ -292,8 +292,8 @@ class Author {
 	 * returns a single object statement
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $tweetId tweet id to search for
-	 * @return Tweet|null Tweet found or null if not found
+	 * @param Uuid|string $authorId author id to search for
+	 * @return Author|null author found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 *
@@ -335,7 +335,7 @@ class Author {
 	$fields = get_object_vars($this);
 
 	$fields["authorId"] = $this->authorId->toString();
-	$fields["authorUsernameId"] = $this->tweetUsernameId->toString();
+	$fields["authorUsernameId"] = $this->authorUsernameId->toString();
 
 }
 */
