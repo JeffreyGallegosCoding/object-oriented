@@ -247,6 +247,7 @@ class Author {
 	 * @param \$pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
 
 	public function insert(\PDO $pdo) : void {
 		//create query template
@@ -264,6 +265,7 @@ class Author {
 		 * @\PDO $pdo PDO connection object
 		 * @throws \PDOException when mySQL related errors occur
 		 * @throws \TypeError if $pdo is not a PDO connection object
+		 */
 
 		public function delete(\PDO $pdo) : void {
 			//query template
@@ -279,6 +281,7 @@ class Author {
 		 * @param \PDO $pdo PDO connection object
 		 * @throws \PDOException when mySQL related errors occur
 		 * @throws \TypeError if $pdo is not a PDO connection object
+		 */
 
 		public function update(\PDO $pdo) : void {
 			//Query template
@@ -288,7 +291,8 @@ class Author {
 			$parameters = ["authorId" => $this->authorId->getBytes()];
 			$statement ->execute($parameters);
 		}
-	 *
+
+	/**
 	 * returns a single object statement
 	 *
 	 * @param \PDO $pdo PDO connection object
@@ -296,9 +300,9 @@ class Author {
 	 * @return Author|null author found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
-	 *
-	 *
-	 * public static function getAuthorByAuthorId (/PDO $pdo, $authorId) : ?Author {
+	 */
+
+		public static function getAuthorByAuthorId (/PDO $pdo, $authorId) : ?Author {
 	 	// sanitize the authorId before searching
 	 	try {
 	 		$authorId = self :: validateUuid ($authorId);
@@ -330,15 +334,14 @@ class Author {
 	  * formats the state variables for JSON serialization
 	  *
 	  * @return array resulting state variables to serialize
-	  *
+	  */
+
 	public function jsonSerialize() : array {
 	$fields = get_object_vars($this);
 
 	$fields["authorId"] = $this->authorId->toString();
 	$fields["authorUsernameId"] = $this->authorUsernameId->toString();
-
-}
-*/
+	}
 }
 
 
