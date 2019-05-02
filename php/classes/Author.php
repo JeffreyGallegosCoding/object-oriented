@@ -330,18 +330,44 @@ class Author {
 		}
 		return($author);
 	 }
+
 	 /**
-	  * formats the state variables for JSON serialization
+	  * method that returns a full array
 	  *
-	  * @return array resulting state variables to serialize
+	  * @param \PDO $pdo PDO connection object
+	  * @param Uuid|String $authorActivationTokenId author Activation Token id to search by
+	  *@return \SplFixedArray of authors found
+	  *@throws \PDOException when mySQL related errors occur
+	  *@throws \TypeError when variables are not the correct data type
 	  */
 
-	public function jsonSerialize() : array {
-	$fields = get_object_vars($this);
-
-	$fields["authorId"] = $this->authorId->toString();
-	$fields["authorUsernameId"] = $this->authorUsernameId->toString();
+	 public static function getAuthorByAuthorActivationToken(\PDO $pdo, $aurhotActivationTokenId) : \SplFixedArray {
+	 	try {
+	 		$authorActivationTokenId = self::validateUuid($authorActivationTokenId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+	 		throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create new query template
+		$query = "select authorId, authorActivationToken, authorEmail from authorId where authorActivationToken = :authorActivationId";
+	 	$statement = $pdo->prepare($query);
+	//bind the author activation token id to the place holder in the template
+	$parameters = ["authorActivationTokenId" => $authorActivationTokenId->getBytes()];
+	$statement->execute($parameters);
+	//build an array of authors
+	$authors = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\Pdo::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false){
+		try {
+			$author = new Author($row["authorId"], $row["authorActivationToken"], $row["authorEmail"]);
+			$authors[$authors->key()] = $author;
+			$authors->next();
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
 	}
+	return($authors);
+}
 }
 
 
