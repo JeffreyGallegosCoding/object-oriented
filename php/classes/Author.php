@@ -335,24 +335,31 @@ class Author {
 	  * method that returns a full array
 	  *
 	  * @param \PDO $pdo PDO connection object
-	  * @param Uuid|String $authorActivationTokenId author Activation Token id to search by
+	  * @param Uuid|String $partialAuthorEmailId to search by
 	  *@return \SplFixedArray of authors found
 	  *@throws \PDOException when mySQL related errors occur
 	  *@throws \TypeError when variables are not the correct data type
 	  */
 
-	 public static function getAuthorByAuthorActivationToken(\PDO $pdo, $aurhotActivationTokenId) : \SplFixedArray {
-	 	try {
-	 		$authorActivationTokenId = self::validateUuid($authorActivationTokenId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-	 		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	 public static function getAuthorByPartialAuthorEmail(\PDO $pdo, $partialAuthorEmail) : \SplFixedArray {
+	 	//sanitize the string before searching
+		$partialAuthorEmail = trim($partialAuthorEmail);
+		$partialAuthorEmail = filter_var($partialAuthorEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if (empty($partialAuthorEmail) === true) {
+			throw(new \PDOException("author email is invalid"));
 		}
+		//escape any mySQL wild cards
+		$partialAuthorEmail = str_replace("_", "\\_", str_replace("%", "\\%", $partialAuthorEmail));
+
 		//create new query template
-		$query = "select authorId, authorActivationToken, authorEmail from authorId where authorActivationToken = :authorActivationId";
+		$query = "select authorId from author where partialAuthorEmail like :partialAuthorEmail";
 	 	$statement = $pdo->prepare($query);
-	//bind the author activation token id to the place holder in the template
-	$parameters = ["authorActivationTokenId" => $authorActivationTokenId->getBytes()];
+
+	//bind the partial author email id to the place holder in the template
+	$partialAuthorEmail = "%$partialAuthorEmail%";
+	$parameters = ["partialAuthorEmail" => $partialAuthorEmail];
 	$statement->execute($parameters);
+
 	//build an array of authors
 	$authors = new \SplFixedArray($statement->rowCount());
 	$statement->setFetchMode(\Pdo::FETCH_ASSOC);
